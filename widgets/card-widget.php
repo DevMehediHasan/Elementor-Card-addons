@@ -156,6 +156,18 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 			]
 		);
 
+        $this->add_control(
+			'delete_content',
+			[
+				'label' => esc_html__( 'Delete Content', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::BUTTON,
+				'separator' => 'before',
+				'button_type' => 'success',
+				'text' => esc_html__( 'Delete', 'first-card-widget' ),
+				'event' => 'namespace:editor:delete',
+			]
+		);
+
         $this->end_controls_section();
 
         $this->start_controls_section(

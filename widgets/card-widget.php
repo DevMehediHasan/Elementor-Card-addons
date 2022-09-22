@@ -440,8 +440,6 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 				<div class="fcw-card-pic-wrap">
 					<?php echo '<img src="' . esc_url( $settings['card_image']['url'] ) . '" alt="">'; ?>
 				</div>
-				<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-
 				<div class="fcw-card-content">
 					<h3 class="fcw-card-title"><?php echo $card_title; ?></h3>
 					<p><?php echo $card_description; ?></p>

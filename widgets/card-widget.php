@@ -109,6 +109,9 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Title', 'first-card-widget' ),
                 'label_block' => true,
 				'placeholder' => esc_html__( 'Enter your title', 'first-card-widget' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -119,6 +122,9 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Card Description', 'first-card-widget' ),
                 'label_block' => true,
 				'placeholder' => esc_html__( 'Enter your Description', 'first-card-widget' ),
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -141,39 +147,79 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				'default' => 'center',
+				'default' => 'left',
+				'toggle' => true,
+				'selectors' => [
+					'{{WRAPPER}} .fcw-card-content' => 'text-align: {{VALUE}};',
+				],
 			]
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'card_image',
 			[
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'label' => esc_html__( 'Choose Image', 'first-card-widget' ),
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				]
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+		$this->add_control(
+			'show_button',
+			[
+				'label' => esc_html__( 'Show Button', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'first-card-widget' ),
+				'label_off' => esc_html__( 'Hide', 'first-card-widget' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+		$this->add_control(
+			'card-button-text',
+			[
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label' => esc_html__( 'Button Name', 'first-card-widget' ),
+                'label_block' => true,
+				'placeholder' => esc_html__( 'Enter Button Name', 'first-card-widget' ),
+			]
+		);
+		$this->add_control(
+			'website_link',
+			[
+				'label' => esc_html__( 'Link', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'first-card-widget' ),
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '',
+					'is_external' => false,
+					'nofollow' => false,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
 			]
 		);
 
-        $this->add_control(
-			'delete_content',
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
 			[
-				'label' => esc_html__( 'Delete Content', 'first-card-widget' ),
-				'type' => \Elementor\Controls_Manager::BUTTON,
-				'separator' => 'before',
-				'button_type' => 'success',
-				'text' => esc_html__( 'Delete', 'first-card-widget' ),
-				'event' => 'namespace:editor:delete',
+				'name' => 'box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'first-card-widget' ),
+				'selector' => '{{WRAPPER}} .fcw-card',
 			]
 		);
 
         $this->end_controls_section();
 
         $this->start_controls_section(
-			'section_style',
+			'title_style',
 			[
-				'label' => esc_html__( 'Style', 'first-card-widget' ),
+				'label' => esc_html__( 'Title Style', 'first-card-widget' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -183,10 +229,74 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 			[
 				'label' => esc_html__( 'Title Color', 'first-card-widget' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#8dc26f',
+				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} h3' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .fcw-card-title' => 'color: {{VALUE}}',
 				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'heading_typography',
+				'selector' => '{{WRAPPER}} .fcw-card-title',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+        $this->start_controls_section(
+			'description_style',
+			[
+				'label' => esc_html__( 'Description Style', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'sub_heading_color',
+			[
+				'label' => esc_html__( 'Description Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .fcw-card-content p' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'sub_heading_typography',
+				'selector' => '{{WRAPPER}} .fcw-card-content p',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'imageBg_style',
+			[
+				'label' => esc_html__( 'Image Background', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'label' => esc_html__( 'Background', 'first-card-widget' ),
+				'types' => [ 'classic', 'gradient', ],
+				'selector' => '{{WRAPPER}} .fcw-card-pic-wrap',
 			]
 		);
 
@@ -207,19 +317,28 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 
         $card_title = $settings['card-title'];
         $card_description = $settings['card_description'];
+		// $card_button_text = $settings['card-button-text'];
+		if ( ! empty( $settings['website_link']['url'] ) ) {
+			$this->add_link_attributes( 'website_link', $settings['website_link'] );
+		}
         
         ?>
 
         <div class="wrap">
 
-            <div class="card">
-            <div class="card-pic-wrap">
+            <div class="fcw-card">
+            <div class="fcw-card-pic-wrap">
             <?php echo '<img src="' . esc_url( $settings['card_image']['url'] ) . '" alt="">'; ?>
             </div>
-            <div class="card-content">
-                <h3><?php echo $card_title; ?></h3>
+            <div class="fcw-card-content">
+                <h3 class="fcw-card-title"><?php echo $card_title; ?></h3>
                 <p><?php echo $card_description; ?></p>
-                <p><a href="#0">So leafy</a></p>
+						<?php 
+							if ( 'yes' === $settings['show_button'] ) {
+								
+								echo "<a href='{$settings['website_link']['url']}'>" . $settings['card-button-text'] . "</a>";
+							} 
+						?>
             </div>
             </div>
         </div>

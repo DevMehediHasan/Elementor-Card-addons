@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: First Card widget
+ * Plugin Name: First Card Widget
  * Description: First Card widget.
  * Plugin URI:  https://elementor.com/
  * Version:     1.0.0
@@ -23,6 +23,14 @@ function callback_for_setting_up_scripts() {
     wp_enqueue_style('card_style');
 
 }
+function my_plugin_frontend_stylesheets() {
+
+	wp_register_style( 'main-card', plugins_url( 'assets/css/main-card.css', __FILE__ ) );
+
+	wp_enqueue_style( 'main-card' );
+
+}
+add_action( 'elementor/frontend/after_enqueue_styles', 'my_plugin_frontend_stylesheets' );
 
 
 function register_first_widget( $widgets_manager ) {

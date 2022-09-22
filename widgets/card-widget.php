@@ -169,6 +169,13 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 			]
 		);
 		$this->add_control(
+			'image_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::HOVER_ANIMATION,
+			]
+		);
+		$this->add_control(
 			'show_button',
 			[
 				'label' => esc_html__( 'Show Button', 'first-card-widget' ),
@@ -219,7 +226,7 @@ class First_Card_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'title_style',
 			[
-				'label' => esc_html__( 'Title Style', 'first-card-widget' ),
+				'label' => esc_html__( 'Title', 'first-card-widget' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -252,7 +259,7 @@ class First_Card_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
 			'description_style',
 			[
-				'label' => esc_html__( 'Description Style', 'first-card-widget' ),
+				'label' => esc_html__( 'Description', 'first-card-widget' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -285,7 +292,7 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'imageBg_style',
 			[
-				'label' => esc_html__( 'Image Background', 'first-card-widget' ),
+				'label' => esc_html__( 'Image', 'first-card-widget' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -299,6 +306,105 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 				'selector' => '{{WRAPPER}} .fcw-card-pic-wrap',
 			]
 		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'button_style',
+			[
+				'label' => esc_html__( 'Button', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+
+		$this->start_controls_tabs(
+			'style_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'first-card-widget' ),
+			]
+		);
+
+		$this->add_control(
+			'button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .fcw-card-content a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'selector' => '{{WRAPPER}} .fcw-card-content a',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'button_background',
+				'label' => esc_html__( 'Button Background', 'first-card-widget' ),
+				'types' => [ 'classic', 'gradient', ],
+				'selector' => '{{WRAPPER}} .fcw-card-content a',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'first-card-widget' ),
+			]
+		);
+
+		$this->add_control(
+			'button_text_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .fcw-card-content a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography_hover',
+				'selector' => '{{WRAPPER}} .fcw-card-content a:hover',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'button_background_hover',
+				'label' => esc_html__( 'Button Background', 'first-card-widget' ),
+				'types' => [ 'classic', 'gradient', ],
+				'selector' => '{{WRAPPER}} .fcw-card-content a:hover',
+			]
+		);
+
+		$this->end_controls_tab();
 
 		$this->end_controls_section();
     }
@@ -317,6 +423,11 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 
         $card_title = $settings['card-title'];
         $card_description = $settings['card_description'];
+		$elementClass = 'fcw-card-pic-wrap';
+		if ( $settings['hover_animation'] ) {
+			$elementClass .= ' elementor-animation-' . $settings['hover_animation'];
+		}
+		$this->add_render_attribute( 'wrapper', 'class', $elementClass );
 		// $card_button_text = $settings['card-button-text'];
 		if ( ! empty( $settings['website_link']['url'] ) ) {
 			$this->add_link_attributes( 'website_link', $settings['website_link'] );
@@ -325,21 +436,22 @@ class First_Card_Widget extends \Elementor\Widget_Base {
         ?>
 
         <div class="wrap">
-
             <div class="fcw-card">
-            <div class="fcw-card-pic-wrap">
-            <?php echo '<img src="' . esc_url( $settings['card_image']['url'] ) . '" alt="">'; ?>
-            </div>
-            <div class="fcw-card-content">
-                <h3 class="fcw-card-title"><?php echo $card_title; ?></h3>
-                <p><?php echo $card_description; ?></p>
+				<div class="fcw-card-pic-wrap">
+					<?php echo '<img src="' . esc_url( $settings['card_image']['url'] ) . '" alt="">'; ?>
+				</div>
+				<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+
+				<div class="fcw-card-content">
+					<h3 class="fcw-card-title"><?php echo $card_title; ?></h3>
+					<p><?php echo $card_description; ?></p>
 						<?php 
 							if ( 'yes' === $settings['show_button'] ) {
 								
 								echo "<a href='{$settings['website_link']['url']}'>" . $settings['card-button-text'] . "</a>";
 							} 
 						?>
-            </div>
+				</div>
             </div>
         </div>
     

@@ -169,13 +169,6 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 			]
 		);
 		$this->add_control(
-			'image_hover_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'first-card-widget' ),
-				'type' => \Elementor\Controls_Manager::HOVER_ANIMATION,
-			]
-		);
-		$this->add_control(
 			'show_button',
 			[
 				'label' => esc_html__( 'Show Button', 'first-card-widget' ),
@@ -423,11 +416,6 @@ class First_Card_Widget extends \Elementor\Widget_Base {
 
         $card_title = $settings['card-title'];
         $card_description = $settings['card_description'];
-		$elementClass = 'fcw-card-pic-wrap';
-		if ( $settings['hover_animation'] ) {
-			$elementClass .= ' elementor-animation-' . $settings['hover_animation'];
-		}
-		$this->add_render_attribute( 'wrapper', 'class', $elementClass );
 		// $card_button_text = $settings['card-button-text'];
 		if ( ! empty( $settings['website_link']['url'] ) ) {
 			$this->add_link_attributes( 'website_link', $settings['website_link'] );

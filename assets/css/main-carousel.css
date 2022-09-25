@@ -1,0 +1,93 @@
+.single-service-item {
+    box-shadow: 0px 3px 6px 0px rgb(153 153 153 / 50%);
+    position: relative;
+    overflow: hidden;
+    margin: 15px 10px;
+}
+.service-item-bg {
+    background-color: #a7a7a7;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+}
+.service-bg-1 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Security-Paper.jpg);
+}
+.service-bg-2 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Security-Ink.jpg);
+}
+.service-bg-3 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Security-Features.jpg);
+}
+.service-bg-4 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Printing-Machinery.jpg);
+}
+.service-bg-5 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Aircraft-Parts.jpg);
+}
+.service-bg-6 {
+    background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Identification-Solution.jpg);
+}
+.service-content {
+    padding: 20px;
+}
+.service-content p{
+    height: 10px;
+}
+.service-content h4 {
+    color: #000;
+    font-size: 18px;
+    text-transform: uppercase;
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.service-content h4:before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    background-color: #41AFDF;
+    display: block;
+    width: 40px;
+    left: 0px;
+    bottom: -5px;
+}
+.readmore-btn {
+    color: #41AFDF;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.readmore-btn i.fa {
+    margin-left: 5px;
+    font-size: 16px;
+}
+.location_map {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+.location_map:before {
+    position: absolute;
+    right: 0px;
+    bottom: -60px;
+    width: 60px;
+    height: 60px;
+    border-top: 80px solid transparent;
+    border-right: 80px solid #41AFDF;
+    border-bottom: 50px solid transparent;
+    content: "";
+    display: block;
+}
+.location_map:hover:before {
+    border-right-color: #292929;
+}
+.location_map i.fa {
+    color: #fff;
+    font-size: 18px;
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+}

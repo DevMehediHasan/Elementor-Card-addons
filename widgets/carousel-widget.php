@@ -42,7 +42,7 @@ class First_Carousel_Widget extends \Elementor\Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'eicon-header';
+		return 'eicon-posts-carousel';
 	}
 
     /**
@@ -81,6 +81,10 @@ class First_Carousel_Widget extends \Elementor\Widget_Base {
 	 */
 	public function get_keywords() {
 		return [ 'carousel', 'image', 'ordered', 'unordered' ];
+	}
+
+	function my_query_by_post_types( $query ) {
+		$query->set( 'post_type', [ 'post', 'post' ] );
 	}
 
     /**

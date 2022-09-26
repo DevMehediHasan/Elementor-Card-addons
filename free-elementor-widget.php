@@ -16,6 +16,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// function admin_notice_missing_main_plugin() {
+// 	if (isset($_GET['activate'])) unset($_GET['activate']);
+// 	$message = sprintf(
+// 		esc_html__('"%1$s" requires "%2$s" to be installed and activated', 'first-card-widget'),
+// 		'<strong>'.esc_html__('Free Elementor Widget').'</strong>',
+// 		'<strong>'.esc_html__('Elementor').'</strong>',
+
+// 	);
+// 	printf('<div class="notice notice-warning is-dimissible"><p>%1$s</p></div>', $message);
+// }
+// add_action('admin_init', 'admin_notice_missing_main_plugin');
 
 add_action('wp_enqueue_scripts', 'callback_for_setting_up_scripts');
 function callback_for_setting_up_scripts() {
@@ -57,6 +68,16 @@ function my_plugin_frontend_stylesheets() {
 
 	wp_enqueue_style( 'brands-min' );
 
+	// fontawesome brands
+	wp_register_style( 'flip-box', plugins_url('assets/css/widget-flip-box-rtl.min.css', __FILE__) );
+
+	wp_enqueue_style( 'flip-box' );
+	
+	// fontawesome brands
+	wp_register_style( 'flip-box-min', plugins_url('assets/css/widget-flip-box.min.css', __FILE__) );
+
+	wp_enqueue_style( 'flip-box-min' );
+
 }
 add_action( 'elementor/frontend/after_enqueue_styles', 'my_plugin_frontend_stylesheets' );
 
@@ -80,9 +101,11 @@ function register_first_widget( $widgets_manager ) {
 
 	require_once( __DIR__ . '/widgets/card-widget.php' );
 	require_once( __DIR__ . '/widgets/carousel-widget.php' );
+	require_once( __DIR__ . '/widgets/flip-box.php' );
 
 	$widgets_manager->register( new \First_Card_Widget() );
 	$widgets_manager->register( new \First_Carousel_Widget() );
+	$widgets_manager->register( new \Flip_Box() );
 
 }
 add_action( 'elementor/widgets/register', 'register_first_widget' );

@@ -8,7 +8,6 @@
     background-color: #a7a7a7;
     background-position: center;
     background-size: cover;
-    height: 200px;
 }
 .service-bg-1 {
     background-image: url(https://relianceinternational.com.bd/wp-content/uploads/2022/07/Security-Paper.jpg);
@@ -30,10 +29,9 @@
 }
 .service-content {
     padding: 20px;
+    background: #fff;
 }
-.service-content p{
-    height: 10px;
-}
+
 .service-content h4 {
     color: #000;
     font-size: 18px;

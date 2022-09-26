@@ -217,27 +217,210 @@ class First_Carousel_Widget extends \Elementor\Widget_Base {
 
 		$this->end_controls_section();
 
-	}
+		$this->start_controls_section(
+			'boxBg_style',
+			[
+				'label' => esc_html__( 'Card', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
 
-    protected function render() {
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'label' => esc_html__( 'Background', 'first-card-widget' ),
+				'types' => [ 'classic', 'gradient', ],
+				'selector' => '{{WRAPPER}} .service-content',
+			]
+		);
+		$this->add_control(
+			'margin',
+			[
+				'label' => esc_html__( 'Padding', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .service-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'title_style',
+			[
+				'label' => esc_html__( 'Title', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'color',
+			[
+				'label' => esc_html__( 'Title Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .service-content h4' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'heading_typography',
+				'selector' => '{{WRAPPER}} .service-content h4',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+        $this->start_controls_section(
+			'description_style',
+			[
+				'label' => esc_html__( 'Description', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'sub_heading_color',
+			[
+				'label' => esc_html__( 'Description Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .service-content .desc' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'sub_heading_typography',
+				'selector' => '{{WRAPPER}} .service-content .desc',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'button_style',
+			[
+				'label' => esc_html__( 'Button', 'first-card-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+
+		$this->start_controls_tabs(
+			'style_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'first-card-widget' ),
+			]
+		);
+
+		$this->add_control(
+			'button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#41AFDF',
+				'selectors' => [
+					'{{WRAPPER}} .readmore-btn' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'selector' => '{{WRAPPER}} .readmore-btn',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'first-card-widget' ),
+			]
+		);
+
+		$this->add_control(
+			'button_text_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'first-card-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .readmore-btn:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography_hover',
+				'selector' => '{{WRAPPER}} .readmore-btn:hover',
+				'global' => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+
+		$this->end_controls_tab();
+
+		$this->end_controls_section();
+    }
+
+
+    
+
+	protected function render() {
 		$settings = $this->get_settings_for_display();
 
 		if ( $settings['list'] ) {
 			echo '<div class="wed_slider">';
-			foreach (  $settings['list'] as $item ) {
-				echo '<div class="single-service-item wow fadeInUp '. esc_attr( $item['_id'] ) . '" style="visibility: visible; animation-name: fadeInUp;">
-                <div class="service-item-bg">
-                <img src="' . esc_url( $item['carousel_image']['url'] ) . '" alt="">
-                
-                </div>
-                <div class="service-content">
-                    <h4>' . $item['list_title'] . '</h4>
-                    <p>' . $item['list_content'] . '</p>
-                    <a href='. $settings['website_link']['url'] .' title="" class="readmore-btn">' . $item['carousel-button-text'] .' <i class="fa fa-angle-right"></i></a>
-                    <div class="location_map"><i class="' . $item['icon'] . '" aria-hidden="true"></i></div>
-                </div>
-                </div>';
-			}
+			foreach (  $settings['list'] as $item ) { ?>
+				<div class="single-service-item wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+					<div class="service-item-bg">
+						<?php echo '<img src="' . esc_url( $item['carousel_image']['url'] ) . '" alt="">'; ?>
+					</div>
+					<div class="service-content">
+						<h4><?php echo $item['list_title']; ?></h4>
+						<div class="desc"> <?php echo $item['list_content']; ?> </div>
+						<?php echo 
+								"<a href='{$item['readmore_link']['url']}' class='readmore-btn'>"
+								 . $item['carousel-button-text'] . " <i class='fa fa-angle-right'></i>",
+								 "</a>";
+						?>
+						<div class="location_map"><i class="<?php echo $item['icon'] ?>"></i></div>
+					</div>
+				</div>
+			<?php }
 			echo '</div>';
 		}
 	}

@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: First Card Widget
- * Description: First Card widget.
+ * Plugin Name: Free Elementor Widget
+ * Description: Free Elementor Widget.
  * Plugin URI:  https://elementor.com/
  * Version:     1.0.0
  * Author:      Mehedi Hasan
- * Author URI:  https://developers.elementor.com/
+ * Author URI:  https://github.com/DevMehediHasan
  * Text Domain: first-card-widget
  *
  * Elementor tested up to: 3.7.0
